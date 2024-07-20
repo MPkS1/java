@@ -1,0 +1,1979 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Java Learning Chatbot</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin: 0;
+            background-color: #f4f4f4;
+        }
+        #chatbox {
+            width: 100%;
+            max-width: 1500px;
+            border: 1px solid #ccc;
+            border-radius: 10px;
+            overflow: hidden;
+            background: #fff;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            margin-top: 20px;
+        }
+        #messages {
+            height: 400px;
+            overflow-y: scroll;
+            padding: 10px;
+            border-bottom: 1px solid #ccc;
+            height: 700px;
+        }
+        #user-input {
+            display: flex;
+            padding: 10px;
+            border-top: 1px solid #ccc;
+        }
+        #user-input input {
+            flex: 1;
+            padding: 10px;
+            border: none;
+            border-radius: 5px;
+            margin-right: 10px;
+        }
+        #user-input button {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            background-color: #007bff;
+            color: #fff;
+            cursor: pointer;
+        }
+        #user-input button:hover {
+            background-color: #0056b3;
+        }
+        .message {
+            margin: 5px 0;
+            padding: 10px;
+            border-radius: 5px;
+        }
+        .user-message {
+            background-color: #e1ffc7;
+            text-align: right;
+        }
+        .bot-message {
+            background-color: #f1f1f1;
+        }
+        .code {
+            background: #282c34;
+            color: #abb2bf;
+            padding: 10px;
+            border-radius: 5px;
+            overflow-x: auto;
+            font-family: monospace;
+        }
+    </style>
+</head>
+<body>
+    <div id="chatbox">
+        <div id="messages"></div>
+        <div id="user-input">
+            <input type="text" id="input-field" placeholder="Type a message..." />
+            <button onclick="sendMessage()">Send</button>
+        </div>
+    </div>
+
+    <script>
+        // Initialize chatbot responses
+        const responses = {
+
+            "introduction to java": `
+<xmp>**Introduction to Java**:
+
+1. **What is Java?**:
+    - Java is a high-level, class-based, object-oriented programming language that is designed to have as few implementation dependencies as possible. It is widely used for building enterprise-scale applications.
+
+2. **History of Java**:
+    - Java was developed by Sun Microsystems in 1995. Later, Oracle Corporation acquired Sun Microsystems and now maintains Java.
+
+3. **Features of Java**:
+    - **Platform-Independent**: Java code can run on any device that has the Java Virtual Machine (JVM).
+    - **Object-Oriented**: Java uses an object-oriented programming model which allows for modular and flexible code.
+    - **Simple**: Java is designed to be easy to learn and use.
+    - **Secure**: Java has built-in security features that help protect applications from threats.
+    - **Robust**: Java emphasizes early checking for possible errors, as it uses strong memory management.
+    - **Portable**: Java bytecode can be executed on any platform without recompilation.
+    - **Multi-threaded**: Java has built-in support for multithreading.
+    - **High Performance**: Java performance is enhanced through the use of Just-In-Time (JIT) compilers.
+
+Example:
+\`\`\`java
+public class HelloWorld {
+    public static void main(String[] args) {
+        System.out.println("Hello, World!");
+    }
+}
+\`\`\`
+Explanation:
+- **public class HelloWorld**: This defines a public class named 'HelloWorld'.
+- **public static void main(String[] args)**: This is the main method which is the entry point of any Java application.
+- **System.out.println("Hello, World!")**: This line prints "Hello, World!" to the console.</xmp>
+            `,
+            "setting up the environment": `
+<xmp>**Setting Up the Environment**:
+
+1. **Installing JDK**:
+    - Download and install the Java Development Kit (JDK) from the [official Oracle website](https://www.oracle.com/java/technologies/javase-downloads.html).
+
+2. **Setting up IDE**:
+    - Install an Integrated Development Environment (IDE) like IntelliJ IDEA, Eclipse, or NetBeans. These tools help in writing and managing Java code efficiently.
+
+3. **Hello World Program**:
+\`\`\`java
+public class HelloWorld {
+    public static void main(String[] args) {
+        System.out.println("Hello, World!");
+    }
+}
+\`\`\`
+Explanation:
+- This basic program demonstrates how to write and execute a simple Java program that prints "Hello, World!" to the console.</xmp>
+            `,
+            "basic syntax": `
+<xmp>**Basic Syntax**:
+
+1. **Structure of a Java Program**:
+\`\`\`java
+public class MyClass {
+    public static void main(String[] args) {
+        // Code goes here
+    }
+}
+\`\`\`
+Explanation:
+- **public class MyClass**: Declares a class named 'MyClass'.
+- **public static void main(String[] args)**: The main method, which is the entry point of the program.
+- **// Code goes here**: This is a comment. You can place your Java code here.
+
+2. **Variables and Data Types**:
+\`\`\`java
+int age = 25;
+String name = "John";
+\`\`\`
+Explanation:
+- **int age = 25**: Declares an integer variable 'age' and initializes it with the value 25.
+- **String name = "John"**: Declares a string variable 'name' and initializes it with the value "John".
+
+3. **Operators**:
+\`\`\`java
+int a = 10;
+int b = 5;
+int sum = a + b; // Arithmetic operator
+boolean isEqual = (a == b); // Relational operator
+boolean isTrue = (a > 5) && (b < 10); // Logical operator
+\`\`\`
+Explanation:
+- **int sum = a + b**: Adds two integers.
+- **boolean isEqual = (a == b)**: Checks if 'a' is equal to 'b'.
+- **boolean isTrue = (a > 5) && (b < 10)**: Logical AND operation.</xmp>
+            `,
+            "control statements": `
+<xmp>**Control Statements**:
+
+1. **Conditional Statements**:
+    - **If-Else**:
+      \`\`\`java
+      int number = 10;
+      if (number > 0) {
+          System.out.println("Number is positive.");
+      } else {
+          System.out.println("Number is non-positive.");
+      }
+      \`\`\`
+    - **Switch**:
+      \`\`\`java
+      int day = 3;
+      switch (day) {
+          case 1: System.out.println("Monday"); break;
+          case 2: System.out.println("Tuesday"); break;
+          case 3: System.out.println("Wednesday"); break;
+          default: System.out.println("Invalid day");
+      }
+      \`\`\`
+
+2. **Loops**:
+    - **For Loop**:
+      \`\`\`java
+      for (int i = 0; i < 5; i++) {
+          System.out.println("i = " + i);
+      }
+      \`\`\`
+    - **While Loop**:
+      \`\`\`java
+      int i = 0;
+      while (i < 5) {
+          System.out.println("i = " + i);
+          i++;
+      }
+      \`\`\`
+    - **Do-While Loop**:
+      \`\`\`java
+      int i = 0;
+      do {
+          System.out.println("i = " + i);
+          i++;
+      } while (i < 5);
+      \`\`\`
+
+3. **Branching Statements**:
+    - **Break**:
+      \`\`\`java
+      for (int i = 0; i < 10; i++) {
+          if (i == 5) {
+              break; // Exit the loop
+          }
+          System.out.println(i);
+      }
+      \`\`\`
+    - **Continue**:
+      \`\`\`java
+      for (int i = 0; i < 10; i++) {
+          if (i % 2 == 0) {
+              continue; // Skip the current iteration
+          }
+          System.out.println(i);
+      }
+      \`\`\`
+    - **Return**:
+      \`\`\`java
+      public class Main {
+          public static void main(String[] args) {
+              System.out.println("Returned Value: " + myMethod());
+          }
+
+          static int myMethod() {
+              return 10;
+          }
+      }
+      \`\`\`</xmp>
+            `,
+            "object oriented programing": `
+<xmp>**Object-Oriented Programming (OOP) Concepts**:
+
+1. **Classes and Objects**:
+\`\`\`java
+public class Person {
+    String name;
+    int age;
+
+    void introduce() {
+        System.out.println("Hi, I am " + name + " and I am " + age + " years old.");
+    }
+}
+
+public class Main {
+    public static void main(String[] args) {
+        Person p = new Person();
+        p.name = "Alice";
+        p.age = 30;
+        p.introduce();
+    }
+}
+\`\`\`
+Explanation:
+- A class 'Person' is defined with fields 'name' and 'age', and a method 'introduce'.
+- An object 'p' of the class 'Person' is created and its fields are assigned values.
+- The 'introduce' method is called to print the details.
+
+2. **Methods**:
+\`\`\`java
+public class Main {
+    static void myMethod() {
+        System.out.println("Hello, World!");
+    }
+
+    public static void main(String[] args) {
+        myMethod();
+    }
+}
+\`\`\`
+Explanation:
+- The 'myMethod' method prints "Hello, World!" when called from the 'main' method.
+
+3. **Constructors**:
+\`\`\`java
+public class Person {
+    String name;
+    int age;
+
+    // Default constructor
+    public Person() {
+        this.name = "Unknown";
+        this.age = 0;
+    }
+
+    // Parameterized constructor
+    public Person(String name, int age) {
+        this.name = name;
+        this.age = age;
+    }
+
+    void introduce() {
+        System.out.println("Hi, I am " + name + " and I am " + age + " years old.");
+    }
+}
+
+public class Main {
+    public static void main(String[] args) {
+        Person p1 = new Person();
+        Person p2 = new Person("Alice", 30);
+        p1.introduce();
+        p2.introduce();
+    }
+}
+\`\`\`
+Explanation:
+- A class 'Person' is defined with default and parameterized constructors.
+- Objects 'p1' and 'p2' are created using different constructors and their details are printed.
+
+4. **Inheritance**:
+\`\`\`java
+class Animal {
+    void eat() {
+        System.out.println("This animal eats food.");
+    }
+}
+
+class Dog extends Animal {
+    void bark() {
+        System.out.println("The dog barks.");
+    }
+}
+
+public class Main {
+    public static void main(String[] args) {
+        Dog d = new Dog();
+        d.eat(); // Inherited method
+        d.bark(); // Subclass method
+    }
+}
+\`\`\`
+Explanation:
+- A class 'Animal' with a method 'eat' is defined.
+- A subclass 'Dog' inherits 'Animal' and adds a method 'bark'.
+- An object 'd' of class 'Dog' is created, demonstrating inheritance.
+
+5. **Polymorphism**:
+\`\`\`java
+class Animal {
+    void sound() {
+        System.out.println("Animal makes a sound.");
+    }
+}
+
+class Cat extends Animal {
+    @Override
+    void sound() {
+        System.out.println("Cat meows.");
+    }
+}
+
+public class Main {
+    public static void main(String[] args) {
+        Animal a = new Cat();
+        a.sound(); // Calls overridden method
+    }
+}
+\`\`\`
+Explanation:
+- Polymorphism is demonstrated through method overriding.
+- A 'Cat' class overrides the 'sound' method of 'Animal'.
+- The 'sound' method of the 'Cat' class is called using a reference of type 'Animal'.
+
+6. **Abstraction**:
+\`\`\`java
+abstract class Animal {
+    abstract void makeSound();
+
+    void sleep() {
+        System.out.println("This animal sleeps.");
+    }
+}
+
+class Dog extends Animal {
+    void makeSound() {
+        System.out.println("Dog barks.");
+    }
+}
+
+public class Main {
+    public static void main(String[] args) {
+        Animal a = new Dog();
+        a.makeSound(); // Calls Dog's implementation
+        a.sleep(); // Calls inherited method
+    }
+}
+\`\`\`
+Explanation:
+- Abstraction is demonstrated through an abstract class 'Animal' with an abstract method 'makeSound'.
+- The 'Dog' class extends 'Animal' and provides implementation for 'makeSound'.
+
+7. **Encapsulation**:
+\`\`\`java
+public class Person {
+    private String name;
+    private int age;
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public int getAge() {
+        return age;
+    }
+
+    public void setAge(int age) {
+        this.age = age;
+    }
+}
+
+public class Main {
+    public static void main(String[] args) {
+        Person p = new Person();
+        p.setName("John");
+        p.setAge(25);
+        System.out.println(p.getName() + " is " + p.getAge() + " years old.");
+    }
+}
+\`\`\`
+Explanation:
+- Encapsulation is demonstrated through private fields and public getter and setter methods in the 'Person' class.</xmp>
+            `,
+            "arrays and strings": `
+<xmp>**Arrays and Strings**:
+
+1. **Arrays**:
+    - **Single-Dimensional Array**:
+      \`\`\`java
+      int[] numbers = {1, 2, 3, 4, 5};
+      for (int num : numbers) {
+          System.out.println(num);
+      }
+      \`\`\`
+      Explanation:
+      - Declares an array 'numbers' and initializes it with values.
+      - Iterates through the array and prints each value.
+
+    - **Multi-Dimensional Array**:
+      \`\`\`java
+      int[][] matrix = {{1, 2}, {3, 4}};
+      for (int i = 0; i < matrix.length; i++) {
+          for (int j = 0; j < matrix[i].length; j++) {
+              System.out.print(matrix[i][j] + " ");
+          }
+          System.out.println();
+      }
+      \`\`\`
+      Explanation:
+      - Declares a 2D array 'matrix' and initializes it with values.
+      - Iterates through the 2D array and prints each value in matrix form.
+
+2. **Strings**:
+    - **String Class**:
+      \`\`\`java
+      String greeting = "Hello, World!";
+      System.out.println(greeting);
+      \`\`\`
+      Explanation:
+      - Declares a string 'greeting' and initializes it with "Hello, World!".
+      - Prints the string.
+
+    - **String Methods**:
+      \`\`\`java
+      String message = "Hello, World!";
+      System.out.println("Length: " + message.length());
+      System.out.println("Uppercase: " + message.toUpperCase());
+      System.out.println("Substring: " + message.substring(7));
+      \`\`\`
+      Explanation:
+      - Demonstrates string methods such as 'length', 'toUpperCase', and 'substring'.
+
+    - **StringBuilder and StringBuffer**:
+      \`\`\`java
+      StringBuilder sb = new StringBuilder("Hello");
+      sb.append(", World!");
+      System.out.println(sb.toString());
+      \`\`\`
+      Explanation:
+      - Uses 'StringBuilder' to create a mutable string and append another string to it.</xmp>
+            `,
+            "packages and modules": `
+<xmp>**Packages and Modules**:
+
+1. **Packages**:
+    - **Creating and Using Packages**:
+      \`\`\`java
+      package com.example;
+
+      public class MyClass {
+          public void display() {
+              System.out.println("Hello from package com.example!");
+          }
+      }
+      \`\`\`
+      Explanation:
+      - Defines a package 'com.example' and a class 'MyClass' within it.
+      - The 'display' method prints a message.
+
+    - **Import Statements**:
+      \`\`\`java
+      import com.example.MyClass;
+
+      public class Main {
+          public static void main(String[] args) {
+              MyClass obj = new MyClass();
+              obj.display();
+          }
+      }
+      \`\`\`
+      Explanation:
+      - Imports the 'MyClass' from the 'com.example' package and uses it in the 'Main' class.
+
+2. **Modules** (Introduced in Java 9):
+    - **Creating a Module**:
+      \`\`\`java
+      module com.example {
+          exports com.example;
+      }
+      \`\`\`
+      Explanation:
+      - Defines a module 'com.example' that exports its package.
+
+    - **Using a Module**:
+      \`\`\`java
+      import com.example.MyClass;
+
+      public class Main {
+          public static void main(String[] args) {
+              MyClass obj = new MyClass();
+              obj.display();
+          }
+      }
+      \`\`\`
+      Explanation:
+      - Imports and uses a class from a module.</xmp>
+            `,
+            "exception handling": `
+<xmp>**Exception Handling**:
+
+1. **Types of Exceptions**:
+    - **Checked and Unchecked Exceptions**:
+      \`\`\`java
+      // Checked Exception
+      import java.io.File;
+      import java.io.FileReader;
+
+      public class Main {
+          public static void main(String[] args) {
+              try {
+                  File file = new File("test.txt");
+                  FileReader fr = new FileReader(file);
+              } catch (Exception e) {
+                  System.out.println("File not found.");
+              }
+          }
+      }
+
+      // Unchecked Exception
+      public class Main {
+          public static void main(String[] args) {
+              int a = 10 / 0; // ArithmeticException
+          }
+      }
+      \`\`\`
+      Explanation:
+      - Demonstrates checked exceptions (e.g., 'FileNotFoundException') and unchecked exceptions (e.g., 'ArithmeticException').
+
+2. **Try-Catch-Finally**:
+    \`\`\`java
+    try {
+        int[] array = new int[5];
+        array[10] = 1;
+    } catch (ArrayIndexOutOfBoundsException e) {
+        System.out.println("Index out of bounds.");
+    } finally {
+        System.out.println("This block always executes.");
+    }
+    \`\`\`
+    Explanation:
+    - Demonstrates handling exceptions using try-catch-finally blocks.
+
+3. **Throw and Throws**:
+    \`\`\`java
+    public class Main {
+        public static void main(String[] args) {
+            try {
+                checkAge(15);
+            } catch (Exception e) {
+                System.out.println(e.getMessage());
+            }
+        }
+
+        static void checkAge(int age) throws Exception {
+            if (age < 18) {
+                throw new Exception("Age must be 18 or above.");
+            }
+        }
+    }
+    \`\`\`
+    Explanation:
+    - Demonstrates throwing and declaring exceptions using 'throw' and 'throws'.
+
+4. **Custom Exceptions**:
+    \`\`\`java
+    class CustomException extends Exception {
+        public CustomException(String message) {
+            super(message);
+        }
+    }
+
+    public class Main {
+        public static void main(String[] args) {
+            try {
+                throw new CustomException("This is a custom exception.");
+            } catch (CustomException e) {
+                System.out.println(e.getMessage());
+            }
+        }
+    }
+    \`\`\`
+    Explanation:
+    - Demonstrates creating and using custom exceptions by extending the 'Exception' class.</xmp>
+            `,
+            "collections framework": `
+<xmp>**Collections Framework**:
+
+1. **List**:
+    \`\`\`java
+    import java.util.ArrayList;
+
+    public class Main {
+        public static void main(String[] args) {
+            ArrayList<String> list = new ArrayList<>();
+            list.add("Apple");
+            list.add("Banana");
+            list.add("Cherry");
+
+            for (String fruit : list) {
+                System.out.println(fruit);
+            }
+        }
+    }
+    \`\`\`
+    Explanation:
+    - Demonstrates the use of an 'ArrayList' to store and iterate over a list of strings.
+
+2. **Set**:
+    \`\`\`java
+    import java.util.HashSet;
+
+    public class Main {
+        public static void main(String[] args) {
+            HashSet<String> set = new HashSet<>();
+            set.add("Apple");
+            set.add("Banana");
+            set.add("Cherry");
+
+            for (String fruit : set) {
+                System.out.println(fruit);
+            }
+        }
+    }
+    \`\`\`
+    Explanation:
+    - Demonstrates the use of a 'HashSet' to store and iterate over a set of unique strings.
+
+3. **Map**:
+    \`\`\`java
+    import java.util.HashMap;
+
+    public class Main {
+        public static void main(String[] args) {
+            HashMap<String, Integer> map = new HashMap<>();
+            map.put("Alice", 30);
+            map.put("Bob", 25);
+
+            for (String key : map.keySet()) {
+                System.out.println(key + ": " + map.get(key));
+            }
+        }
+    }
+    \`\`\`
+    Explanation:
+    - Demonstrates the use of a 'HashMap' to store key-value pairs and iterate over them.
+
+4. **Queue**:
+    \`\`\`java
+    import java.util.LinkedList;
+    import java.util.Queue;
+
+    public class Main {
+        public static void main(String[] args) {
+            Queue<String> queue = new LinkedList<>();
+            queue.add("Apple");
+            queue.add("Banana");
+            queue.add("Cherry");
+
+            while (!queue.isEmpty()) {
+                System.out.println(queue.poll());
+            }
+        }
+    }
+    \`\`\`
+    Explanation:
+    - Demonstrates the use of a 'Queue' to store and retrieve elements in a FIFO (First In, First Out) order.
+
+5. **Iterators**:
+    \`\`\`java
+    import java.util.ArrayList;
+    import java.util.Iterator;
+
+    public class Main {
+        public static void main(String[] args) {
+            ArrayList<String> list = new ArrayList<>();
+            list.add("Apple");
+            list.add("Banana");
+            list.add("Cherry");
+
+            Iterator<String> iterator = list.iterator();
+            while (iterator.hasNext()) {
+                System.out.println(iterator.next());
+            }
+        }
+    }
+    \`\`\`
+    Explanation:
+    - Demonstrates the use of an 'Iterator' to iterate over a collection of elements.</xmp>
+            `,
+            "java input and output": `
+<xmp>**Java Input/Output (I/O)**:
+
+1. **Streams**:
+    - **Byte Streams**:
+      \`\`\`java
+      import java.io.FileInputStream;
+      import java.io.FileOutputStream;
+      import java.io.IOException;
+
+      public class Main {
+          public static void main(String[] args) {
+              try (FileInputStream fis = new FileInputStream("input.txt");
+                   FileOutputStream fos = new FileOutputStream("output.txt")) {
+                  int data;
+                  while ((data = fis.read()) != -1) {
+                      fos.write(data);
+                  }
+              } catch (IOException e) {
+                  e.printStackTrace();
+              }
+          }
+      }
+      \`\`\`
+      Explanation:
+      - Demonstrates reading from a file using 'FileInputStream' and writing to a file using 'FileOutputStream'.
+
+    - **Character Streams**:
+      \`\`\`java
+      import java.io.FileReader;
+      import java.io.FileWriter;
+      import java.io.IOException;
+
+      public class Main {
+          public static void main(String[] args) {
+              try (FileReader fr = new FileReader("input.txt");
+                   FileWriter fw = new FileWriter("output.txt")) {
+                  int data;
+                  while ((data = fr.read()) != -1) {
+                      fw.write(data);
+                  }
+              } catch (IOException e) {
+                  e.printStackTrace();
+              }
+          }
+      }
+      \`\`\`
+      Explanation:
+      - Demonstrates reading from a file using 'FileReader' and writing to a file using 'FileWriter'.
+
+2. **File Handling**:
+    \`\`\`java
+    import java.io.File;
+    import java.io.IOException;
+
+    public class Main {
+        public static void main(String[] args) {
+            File file = new File("example.txt");
+            try {
+                if (file.createNewFile()) {
+                    System.out.println("File created: " + file.getName());
+                } else {
+                    System.out.println("File already exists.");
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+    \`\`\`
+    Explanation:
+    - Demonstrates creating a new file using the 'File' class.
+
+3. **Serialization**:
+    \`\`\`java
+    import java.io.FileOutputStream;
+    import java.io.FileInputStream;
+    import java.io.ObjectOutputStream;
+    import java.io.ObjectInputStream;
+    import java.io.Serializable;
+
+    class Person implements Serializable {
+        String name;
+        int age;
+
+        public Person(String name, int age) {
+            this.name = name;
+            this.age = age;
+        }
+    }
+
+    public class Main {
+        public static void main(String[] args) {
+            Person p = new Person("John", 25);
+            try (FileOutputStream fos = new FileOutputStream("person.ser");
+                 ObjectOutputStream oos = new ObjectOutputStream(fos)) {
+                oos.writeObject(p);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
+            try (FileInputStream fis = new FileInputStream("person.ser");
+                 ObjectInputStream ois = new ObjectInputStream(fis)) {
+                Person person = (Person) ois.readObject();
+                System.out.println("Name: " + person.name + ", Age: " + person.age);
+            } catch (IOException | ClassNotFoundException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+    \`\`\`
+    Explanation:
+    - Demonstrates serialization and deserialization of an object using 'ObjectOutputStream' and 'ObjectInputStream'.</xmp>
+            `,
+            "multithreading and concurrency": `
+<xmp>**Multithreading and Concurrency**:
+
+1. **Threads**:
+    \`\`\`java
+    class MyThread extends Thread {
+        public void run() {
+            System.out.println("Thread is running.");
+        }
+    }
+
+    public class Main {
+        public static void main(String[] args) {
+            MyThread t = new MyThread();
+            t.start();
+        }
+    }
+    \`\`\`
+    Explanation:
+    - Demonstrates creating a thread by extending the 'Thread' class and overriding the 'run' method.
+
+2. **Thread Synchronization**:
+    \`\`\`java
+    class Counter {
+        int count = 0;
+
+        public synchronized void increment() {
+            count++;
+        }
+    }
+
+    public class Main {
+        public static void main(String[] args) {
+            Counter counter = new Counter();
+            Thread t1 = new Thread(() -> {
+                for (int i = 0; i < 1000; i++) {
+                    counter.increment();
+                }
+            });
+            Thread t2 = new Thread(() -> {
+                for (int i = 0; i < 1000; i++) {
+                    counter.increment();
+                }
+            });
+            t1.start();
+            t2.start();
+            try {
+                t1.join();
+                t2.join();
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+            System.out.println("Count: " + counter.count);
+        }
+    }
+    \`\`\`
+    Explanation:
+    - Demonstrates thread synchronization using the 'synchronized' keyword to ensure thread-safe operations.
+
+3. **Concurrency Utilities**:
+    \`\`\`java
+    import java.util.concurrent.ExecutorService;
+    import java.util.concurrent.Executors;
+
+    public class Main {
+        public static void main(String[] args) {
+            ExecutorService executor = Executors.newFixedThreadPool(2);
+            executor.submit(() -> {
+                System.out.println("Task 1 is running.");
+            });
+            executor.submit(() -> {
+                System.out.println("Task 2 is running.");
+            });
+            executor.shutdown();
+        }
+    }
+    \`\`\`
+    Explanation:
+    - Demonstrates using the 'ExecutorService' to manage a pool of threads and execute tasks concurrently.</xmp>
+            `,
+            "networking": `
+<xmp>**Networking**:
+
+1. **Sockets**:
+    - **TCP Sockets**:
+      \`\`\`java
+      import java.io.*;
+      import java.net.*;
+
+      public class Client {
+          public static void main(String[] args) {
+              try (Socket socket = new Socket("localhost", 5000);
+                   PrintWriter out = new PrintWriter(socket.getOutputStream(), true);
+                   BufferedReader in = new BufferedReader(new InputStreamReader(socket.getInputStream()))) {
+                  out.println("Hello, Server!");
+                  System.out.println("Server says: " + in.readLine());
+              } catch (IOException e) {
+                  e.printStackTrace();
+              }
+          }
+      }
+
+      public class Server {
+          public static void main(String[] args) {
+              try (ServerSocket serverSocket = new ServerSocket(5000)) {
+                  Socket socket = serverSocket.accept();
+                  PrintWriter out = new PrintWriter(socket.getOutputStream(), true);
+                  BufferedReader in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
+                  System.out.println("Client says: " + in.readLine());
+                  out.println("Hello, Client!");
+              } catch (IOException e) {
+                  e.printStackTrace();
+              }
+          }
+      }
+      \`\`\`
+      Explanation:
+      - Demonstrates creating a TCP client-server application using 'Socket' and 'ServerSocket' classes.
+
+    - **UDP Sockets**:
+      \`\`\`java
+      import java.net.*;
+
+      public class UDPClient {
+          public static void main(String[] args) {
+              try {
+                  DatagramSocket socket = new DatagramSocket();
+                  byte[] buffer = "Hello, Server!".getBytes();
+                  InetAddress address = InetAddress.getByName("localhost");
+                  DatagramPacket packet = new DatagramPacket(buffer, buffer.length, address, 5000);
+                  socket.send(packet);
+
+                  buffer = new byte[256];
+                  packet = new DatagramPacket(buffer, buffer.length);
+                  socket.receive(packet);
+                  String received = new String(packet.getData(), 0, packet.getLength());
+                  System.out.println("Server says: " + received);
+              } catch (IOException e) {
+                  e.printStackTrace();
+              }
+          }
+      }
+
+      public class UDPServer {
+          public static void main(String[] args) {
+              try {
+                  DatagramSocket socket = new DatagramSocket(5000);
+                  byte[] buffer = new byte[256];
+                  DatagramPacket packet = new DatagramPacket(buffer, buffer.length);
+                  socket.receive(packet);
+                  String received = new String(packet.getData(), 0, packet.getLength());
+                  System.out.println("Client says: " + received);
+
+                  InetAddress address = packet.getAddress();
+                  int port = packet.getPort();
+                  buffer = "Hello, Client!".getBytes();
+                  packet = new DatagramPacket(buffer, buffer.length, address, port);
+                  socket.send(packet);
+              } catch (IOException e) {
+                  e.printStackTrace();
+              }
+          }
+      }
+      \`\`\`
+      Explanation:
+      - Demonstrates creating a UDP client-server application using 'DatagramSocket' and 'DatagramPacket' classes.
+
+2. **URL and HTTP**:
+    \`\`\`java
+    import java.io.BufferedReader;
+    import java.io.InputStreamReader;
+    import java.net.HttpURLConnection;
+    import java.net.URL;
+
+    public class Main {
+        public static void main(String[] args) {
+            try {
+                URL url = new URL("https://api.github.com");
+                HttpURLConnection con = (HttpURLConnection) url.openConnection();
+                con.setRequestMethod("GET");
+
+                int status = con.getResponseCode();
+                BufferedReader in = new BufferedReader(new InputStreamReader(con.getInputStream()));
+                String inputLine;
+                StringBuilder content = new StringBuilder();
+                while ((inputLine = in.readLine()) != null) {
+                    content.append(inputLine);
+                }
+                in.close();
+                con.disconnect();
+
+                System.out.println("Response Code: " + status);
+                System.out.println("Response: " + content.toString());
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+    }
+    \`\`\`
+    Explanation:
+    - Demonstrates sending an HTTP GET request to a URL and reading the response using 'HttpURLConnection'.</xmp>
+            `,
+            "java database connectivity": `
+<xmp>**Java Database Connectivity (JDBC)**:
+
+1. **Connecting to Databases**:
+    \`\`\`java
+    import java.sql.Connection;
+    import java.sql.DriverManager;
+    import java.sql.SQLException;
+
+    public class Main {
+        public static void main(String[] args) {
+            String url = "jdbc:mysql://localhost:3306/mydatabase";
+            String user = "root";
+            String password = "password";
+
+            try (Connection con = DriverManager.getConnection(url, user, password)) {
+                if (con != null) {
+                    System.out.println("Connected to the database.");
+                }
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+    \`\`\`
+    Explanation:
+    - Demonstrates establishing a connection to a MySQL database using JDBC.
+
+2. **CRUD Operations**:
+    \`\`\`java
+    import java.sql.Connection;
+    import java.sql.DriverManager;
+    import java.sql.SQLException;
+    import java.sql.Statement;
+    import java.sql.ResultSet;
+
+    public class Main {
+        public static void main(String[] args) {
+            String url = "jdbc:mysql://localhost:3306/mydatabase";
+            String user = "root";
+            String password = "password";
+
+            try (Connection con = DriverManager.getConnection(url, user, password);
+                 Statement stmt = con.createStatement()) {
+
+                // CREATE
+                String createQuery = "INSERT INTO users (name, age) VALUES ('Alice', 30)";
+                stmt.executeUpdate(createQuery);
+
+                // READ
+                String readQuery = "SELECT * FROM users";
+                ResultSet rs = stmt.executeQuery(readQuery);
+                while (rs.next()) {
+                    System.out.println("ID: " + rs.getInt("id") + ", Name: " + rs.getString("name") + ", Age: " + rs.getInt("age"));
+                }
+
+                // UPDATE
+                String updateQuery = "UPDATE users SET age = 31 WHERE name = 'Alice'";
+                stmt.executeUpdate(updateQuery);
+
+                // DELETE
+                String deleteQuery = "DELETE FROM users WHERE name = 'Alice'";
+                stmt.executeUpdate(deleteQuery);
+
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+    \`\`\`
+    Explanation:
+    - Demonstrates performing Create, Read, Update, and Delete (CRUD) operations on a database using JDBC.</xmp>
+            `,
+            "javafx and gui programming": `
+<xmp>**JavaFX and GUI Programming**:
+
+1. **Introduction to JavaFX**:
+    - **Setting up JavaFX**:
+      \`\`\`java
+      import javafx.application.Application;
+      import javafx.scene.Scene;
+      import javafx.scene.control.Label;
+      import javafx.stage.Stage;
+
+      public class Main extends Application {
+          @Override
+          public void start(Stage primaryStage) {
+              Label label = new Label("Hello, JavaFX!");
+              Scene scene = new Scene(label, 400, 200);
+              primaryStage.setScene(scene);
+              primaryStage.setTitle("JavaFX Example");
+              primaryStage.show();
+          }
+
+          public static void main(String[] args) {
+              launch(args);
+          }
+      }
+      \`\`\`
+      Explanation:
+      - Demonstrates setting up a basic JavaFX application with a label.
+
+2. **Event Handling**:
+    \`\`\`java
+    import javafx.application.Application;
+    import javafx.scene.Scene;
+    import javafx.scene.control.Button;
+    import javafx.stage.Stage;
+
+    public class Main extends Application {
+        @Override
+        public void start(Stage primaryStage) {
+            Button button = new Button("Click Me");
+            button.setOnAction(e -> System.out.println("Button clicked!"));
+
+            Scene scene = new Scene(button, 400, 200);
+            primaryStage.setScene(scene);
+            primaryStage.setTitle("Event Handling Example");
+            primaryStage.show();
+        }
+
+        public static void main(String[] args) {
+            launch(args);
+        }
+    }
+    \`\`\`
+    Explanation:
+    - Demonstrates handling a button click event in a JavaFX application.
+
+3. **Layouts**:
+    \`\`\`java
+    import javafx.application.Application;
+    import javafx.scene.Scene;
+    import javafx.scene.control.Button;
+    import javafx.scene.layout.VBox;
+    import javafx.stage.Stage;
+
+    public class Main extends Application {
+        @Override
+        public void start(Stage primaryStage) {
+            Button button1 = new Button("Button 1");
+            Button button2 = new Button("Button 2");
+
+            VBox layout = new VBox(10); // 10 is the spacing between elements
+            layout.getChildren().addAll(button1, button2);
+
+            Scene scene = new Scene(layout, 400, 200);
+            primaryStage.setScene(scene);
+            primaryStage.setTitle("Layout Example");
+            primaryStage.show();
+        }
+
+        public static void main(String[] args) {
+            launch(args);
+        }
+    }
+    \`\`\`
+    Explanation:
+    - Demonstrates using a VBox layout to arrange buttons in a JavaFX application.</xmp>
+            `,
+            "advanced topics": `
+<xmp>**Advanced Topics**:
+
+1. **Lambda Expressions**:
+    \`\`\`java
+    import java.util.ArrayList;
+
+    public class Main {
+        public static void main(String[] args) {
+            ArrayList<String> list = new ArrayList<>();
+            list.add("Apple");
+            list.add("Banana");
+            list.add("Cherry");
+
+            list.forEach(fruit -> System.out.println(fruit));
+        }
+    }
+    \`\`\`
+    Explanation:
+    - Demonstrates using a lambda expression to iterate over a list.
+
+2. **Streams API**:
+    \`\`\`java
+    import java.util.Arrays;
+    import java.util.List;
+
+    public class Main {
+        public static void main(String[] args) {
+            List<String> list = Arrays.asList("Apple", "Banana", "Cherry");
+
+            list.stream()
+                .filter(fruit -> fruit.startsWith("A"))
+                .forEach(System.out::println);
+        }
+    }
+    \`\`\`
+    Explanation:
+    - Demonstrates using the Streams API to filter and print elements of a list.
+
+3. **Annotations**:
+    \`\`\`java
+    @interface MyAnnotation {
+        String value();
+    }
+
+    @MyAnnotation(value = "example")
+    public class Main {
+        public static void main(String[] args) {
+            System.out.println("Annotation Example");
+        }
+    }
+    \`\`\`
+    Explanation:
+    - Demonstrates creating and using a custom annotation.
+
+4. **Generics**:
+    \`\`\`java
+    import java.util.ArrayList;
+
+    public class Main {
+        public static void main(String[] args) {
+            ArrayList<Integer> list = new ArrayList<>();
+            list.add(1);
+            list.add(2);
+            list.add(3);
+
+            for (int num : list) {
+                System.out.println(num);
+            }
+        }
+    }
+    \`\`\`
+    Explanation:
+    - Demonstrates using generics to create a type-safe collection.</xmp>
+            `,
+            "best practices": `
+<xmp>**Best Practices**:
+
+1. **Code Style and Conventions**:
+    - Follow coding standards and naming conventions.
+    - Use meaningful variable names and consistent indentation.
+
+2. **Testing and Debugging**:
+    - Write test cases for your code.
+    - Use debugging tools to find and fix issues.
+
+3. **Version Control**:
+    - Use Git for version control.
+    - Commit changes regularly with meaningful commit messages.</xmp>
+    
+            `,
+            "unit 1": `
+<div class="section-title">Unit I: Object-Oriented Programming</div>
+<p><strong>Basic Concepts, Principles, Program Structure in Java</strong></p>
+<p><strong>Introduction:</strong> Java is a high-level, class-based, object-oriented programming language designed to have as few implementation dependencies as possible.</p>
+
+<p><strong>Writing Simple Java Programs:</strong></p>
+<div class="code">
+<pre><code>public class HelloWorld {
+    public static void main(String[] args) {
+        System.out.println("Hello, World!");
+    }
+}
+</code></pre>
+</div>
+<p><strong>Explanation:</strong></p>
+<ul>
+    <li><strong>public class HelloWorld:</strong> Defines a public class named HelloWorld.</li>
+    <li><strong>public static void main(String[] args):</strong> Main method, the entry point of any Java application.</li>
+    <li><strong>System.out.println("Hello, World!");</strong> Prints "Hello, World!" to the console.</li>
+</ul>
+
+<p><strong>Elements or Tokens in Java Programs:</strong> Keywords, identifiers, literals, operators, and separators.</p>
+<p><strong>Java Statements:</strong> Instructions executed by the Java interpreter.</p>
+<p><strong>Command Line Arguments:</strong> Data passed to the program at runtime.</p>
+<p><strong>User Input to Programs:</strong></p>
+<div class="code">
+<pre><code>import java.util.Scanner;
+
+public class UserInput {
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+        System.out.println("Enter your name:");
+        String name = scanner.nextLine();
+        System.out.println("Hello, " + name);
+    }
+}
+</code></pre>
+</div>
+<p><strong>Explanation:</strong></p>
+<ul>
+    <li><strong>import java.util.Scanner:</strong> Imports the Scanner class for user input.</li>
+    <li><strong>Scanner scanner = new Scanner(System.in):</strong> Creates a Scanner object to read input.</li>
+    <li><strong>scanner.nextLine():</strong> Reads a line of text from the user.</li>
+</ul>
+
+<p><strong>Escape Sequences:</strong> Special characters used in strings (e.g., \\n for newline).</p>
+<p><strong>Comments:</strong></p>
+<div class="code">
+<pre><code>// This is a single-line comment
+/* This is a multi-line comment */
+</code></pre>
+</div>
+<p><strong>Programming Style:</strong> Use meaningful variable names, proper indentation, and comments for readability.</p>
+
+<p><strong>Data Types, Variables, and Operators:</strong></p>
+<p><strong>Data Types in Java:</strong> Primitive (int, char, double, etc.) and Non-Primitive (String, arrays, objects).</p>
+<p><strong>Declaration of Variables:</strong></p>
+<div class="code">
+<pre><code>int age = 25;
+String name = "John";
+</code></pre>
+</div>
+<p><strong>Type Casting:</strong></p>
+<div class="code">
+<pre><code>int num = 10;
+double d = (double) num; // Explicit casting
+</code></pre>
+</div>
+<p><strong>Scope of Variable:</strong> The region in the code where the variable is accessible.</p>
+<p><strong>Literal Constants:</strong> Fixed values assigned to variables (e.g., 10, 'A', "Hello").</p>
+<p><strong>Symbolic Constants:</strong> Variables declared as final.</p>
+<p><strong>Formatted Output with printf() Method:</strong></p>
+<div class="code">
+<pre><code>System.out.printf("Name: %s Age: %d", name, age);
+</code></pre>
+</div>
+
+<p><strong>Static Variables and Methods:</strong> Class-level variables and methods.</p>
+<p><strong>Attribute Final:</strong> Constants in Java.</p>
+<p><strong>Operators:</strong> Arithmetic (+, -, *, /, %), Relational (==, !=, >, <, >=, <=), Logical (&&, ||, !), Bitwise (&, |, ^, ~, <<, >>, >>>), Assignment (=), Increment/Decrement (++, --), Ternary ( ? : ).</p>
+<p><strong>Examples:</strong></p>
+<div class="code">
+<pre><code>int a = 5, b = 10;
+int min = (a < b) ? a : b; // Ternary operator
+</code></pre>
+</div>
+
+<p><strong>Control Statements:</strong></p>
+<p><strong>If-Else Statements:</strong></p>
+<div class="code">
+<pre><code>int num = 10;
+if (num > 0) {
+    System.out.println("Positive number");
+} else {
+    System.out.println("Non-positive number");
+}
+</code></pre>
+</div>
+
+<p><strong>Switch Statement:</strong></p>
+<div class="code">
+<pre><code>int day = 3;
+switch (day) {
+    case 1: System.out.println("Monday"); break;
+    case 2: System.out.println("Tuesday"); break;
+    case 3: System.out.println("Wednesday"); break;
+    default: System.out.println("Invalid day");
+}
+</code></pre>
+</div>
+
+<p><strong>Loops:</strong></p>
+<p><strong>For Loop:</strong></p>
+<div class="code">
+<pre><code>for (int i = 0; i < 5; i++) {
+    System.out.println("i = " + i);
+}
+</code></pre>
+</div>
+
+<p><strong>While Loop:</strong></p>
+<div class="code">
+<pre><code>int i = 0;
+while (i < 5) {
+    System.out.println("i = " + i);
+    i++;
+}
+</code></pre>
+</div>
+
+<p><strong>Do-While Loop:</strong></p>
+<div class="code">
+<pre><code>int i = 0;
+do {
+    System.out.println("i = " + i);
+    i++;
+} while (i < 5);
+</code></pre>
+</div>
+
+<p><strong>For-Each Loop:</strong></p>
+<div class="code">
+<pre><code>int[] numbers = {1, 2, 3, 4, 5};
+for (int num : numbers) {
+    System.out.println(num);
+}
+</code></pre>
+</div>
+
+<p><strong>Control Transfer Statements:</strong> break, continue, and return.</p>
+            `,
+            "unit 2": `
+<div class="section-title">Unit II: Object-Oriented Programming</div>
+<p><strong>Object-Oriented Programming Concepts:</strong></p>
+<p><strong>Classes and Objects:</strong></p>
+<div class="code">
+<pre><code>public class Person {
+    String name;
+    int age;
+    
+    void introduce() {
+        System.out.println("My name is " + name + " and I am " + age + " years old.");
+    }
+}
+</code></pre>
+</div>
+<p><strong>Explanation:</strong></p>
+<ul>
+    <li><strong>Class Person:</strong> Defines a class with attributes name and age, and a method introduce.</li>
+    <li><strong>Object:</strong> Instance of the class, created using <code>new Person()</code>.</li>
+</ul>
+
+<p><strong>Constructors:</strong></p>
+<div class="code">
+<pre><code>public class Person {
+    String name;
+    int age;
+
+    // Constructor
+    Person(String name, int age) {
+        this.name = name;
+        this.age = age;
+    }
+}
+</code></pre>
+</div>
+
+<p><strong>Inheritance:</strong></p>
+<div class="code">
+<pre><code>public class Student extends Person {
+    String school;
+
+    Student(String name, int age, String school) {
+        super(name, age);
+        this.school = school;
+    }
+}
+</code></pre>
+</div>
+
+<p><strong>Polymorphism:</strong></p>
+<div class="code">
+<pre><code>class Animal {
+    void makeSound() {
+        System.out.println("Animal makes a sound");
+    }
+}
+
+class Dog extends Animal {
+    void makeSound() {
+        System.out.println("Dog barks");
+    }
+}
+
+public class Main {
+    public static void main(String[] args) {
+        Animal myDog = new Dog();
+        myDog.makeSound(); // Output: Dog barks
+    }
+}
+</code></pre>
+</div>
+
+<p><strong>Abstraction:</strong></p>
+<div class="code">
+<pre><code>abstract class Animal {
+    abstract void makeSound();
+}
+
+class Dog extends Animal {
+    void makeSound() {
+        System.out.println("Dog barks");
+    }
+}
+</code></pre>
+</div>
+
+<p><strong>Encapsulation:</strong></p>
+<div class="code">
+<pre><code>public class Person {
+    private String name;
+    
+    // Getter
+    public String getName() {
+        return name;
+    }
+    
+    // Setter
+    public void setName(String name) {
+        this.name = name;
+    }
+}
+</code></pre>
+</div>
+
+<p><strong>Interfaces:</strong></p>
+<div class="code">
+<pre><code>interface Animal {
+    void makeSound();
+}
+
+class Dog implements Animal {
+    public void makeSound() {
+        System.out.println("Dog barks");
+    }
+}
+</code></pre>
+</div>
+
+<p><strong>Exception Handling:</strong></p>
+<div class="code">
+<pre><code>try {
+    int result = 10 / 0;
+} catch (ArithmeticException e) {
+    System.out.println("Cannot divide by zero");
+} finally {
+    System.out.println("This block is always executed");
+}
+</code></pre>
+</div>
+            `,
+            "unit 3": `
+<div class="section-title">Unit III: Advanced Java Programming</div>
+<p><strong>Collections Framework:</strong></p>
+<p><strong>Introduction:</strong> A set of classes and interfaces that implement commonly reusable collection data structures.</p>
+<p><strong>List Interface:</strong></p>
+<div class="code">
+<pre><code>import java.util.ArrayList;
+import java.util.List;
+
+public class ListExample {
+    public static void main(String[] args) {
+        List<String> list = new ArrayList<>();
+        list.add("Apple");
+        list.add("Banana");
+        list.add("Cherry");
+        
+        for (String fruit : list) {
+            System.out.println(fruit);
+        }
+    }
+}
+</code></pre>
+</div>
+<p><strong>Explanation:</strong></p>
+<ul>
+    <li><strong>List<String> list:</strong> Creates a list of strings.</li>
+    <li><strong>ArrayList<>():</strong> Implements the List interface.</li>
+    <li><strong>list.add(...):</strong> Adds elements to the list.</li>
+    <li><strong>for (String fruit : list):</strong> Iterates over the list elements.</li>
+</ul>
+
+<p><strong>Map Interface:</strong></p>
+<div class="code">
+<pre><code>import java.util.HashMap;
+import java.util.Map;
+
+public class MapExample {
+    public static void main(String[] args) {
+        Map<String, Integer> map = new HashMap<>();
+        map.put("John", 25);
+        map.put("Jane", 30);
+        map.put("Joe", 35);
+        
+        for (Map.Entry<String, Integer> entry : map.entrySet()) {
+            System.out.println(entry.getKey() + ": " + entry.getValue());
+        }
+    }
+}
+</code></pre>
+</div>
+<p><strong>Explanation:</strong></p>
+<ul>
+    <li><strong>Map<String, Integer> map:</strong> Creates a map with string keys and integer values.</li>
+    <li><strong>HashMap<>():</strong> Implements the Map interface.</li>
+    <li><strong>map.put(...):</strong> Adds key-value pairs to the map.</li>
+    <li><strong>for (Map.Entry<String, Integer> entry : map.entrySet()):</strong> Iterates over map entries.</li>
+</ul>
+
+<p><strong>Set Interface:</strong></p>
+<div class="code">
+<pre><code>import java.util.HashSet;
+import java.util.Set;
+
+public class SetExample {
+    public static void main(String[] args) {
+        Set<String> set = new HashSet<>();
+        set.add("Apple");
+        set.add("Banana");
+        set.add("Cherry");
+        
+        for (String fruit : set) {
+            System.out.println(fruit);
+        }
+    }
+}
+</code></pre>
+</div>
+<p><strong>Explanation:</strong></p>
+<ul>
+    <li><strong>Set<String> set:</strong> Creates a set of strings.</li>
+    <li><strong>HashSet<>():</strong> Implements the Set interface.</li>
+    <li><strong>set.add(...):</strong> Adds elements to the set.</li>
+    <li><strong>for (String fruit : set):</strong> Iterates over the set elements.</li>
+</ul>
+
+<p><strong>Generics:</strong> Enable classes and methods to operate on objects of various types while providing compile-time type safety.</p>
+<div class="code">
+<pre><code>public class GenericExample&lt;T&gt; {
+    private T value;
+    
+    public void setValue(T value) {
+        this.value = value;
+    }
+    
+    public T getValue() {
+        return value;
+    }
+    
+    public static void main(String[] args) {
+        GenericExample&lt;Integer&gt; intObj = new GenericExample&lt;&gt;();
+        intObj.setValue(10);
+        System.out.println(intObj.getValue());
+        
+        GenericExample&lt;String&gt; strObj = new GenericExample&lt;&gt;();
+        strObj.setValue("Hello");
+        System.out.println(strObj.getValue());
+    }
+}
+</code></pre>
+</div>
+<p><strong>Explanation:</strong></p>
+<ul>
+    <li><strong>&lt;T&gt;:</strong> Generic type parameter.</li>
+    <li><strong>setValue(T value):</strong> Sets the value of type T.</li>
+    <li><strong>getValue():</strong> Returns the value of type T.</li>
+</ul>
+            `,
+            "unit 4": `
+<div class="section-title">Unit IV: Java Input/Output (I/O)</div>
+<p><strong>Introduction to Java I/O:</strong> Java I/O API is used for reading and writing data.</p>
+<p><strong>File Handling:</strong></p>
+<div class="code">
+<pre><code>import java.io.File;
+import java.io.IOException;
+
+public class FileExample {
+    public static void main(String[] args) {
+        File file = new File("example.txt");
+        
+        try {
+            if (file.createNewFile()) {
+                System.out.println("File created: " + file.getName());
+            } else {
+                System.out.println("File already exists.");
+            }
+        } catch (IOException e) {
+            System.out.println("An error occurred.");
+            e.printStackTrace();
+        }
+    }
+}
+</code></pre>
+</div>
+<p><strong>Explanation:</strong></p>
+<ul>
+    <li><strong>File file = new File("example.txt"):</strong> Creates a File object.</li>
+    <li><strong>file.createNewFile():</strong> Creates a new file if it does not exist.</li>
+    <li><strong>catch (IOException e):</strong> Handles IO exceptions.</li>
+</ul>
+
+<p><strong>Reading and Writing Files:</strong></p>
+<p><strong>Reading from a File:</strong></p>
+<div class="code">
+<pre><code>import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.IOException;
+
+public class ReadFileExample {
+    public static void main(String[] args) {
+        try (BufferedReader reader = new BufferedReader(new FileReader("example.txt"))) {
+            String line;
+            while ((line = reader.readLine()) != null) {
+                System.out.println(line);
+            }
+        } catch (IOException e) {
+            System.out.println("An error occurred.");
+            e.printStackTrace();
+        }
+    }
+}
+</code></pre>
+</div>
+
+<p><strong>Writing to a File:</strong></p>
+<div class="code">
+<pre><code>import java.io.BufferedWriter;
+import java.io.FileWriter;
+import java.io.IOException;
+
+public class WriteFileExample {
+    public static void main(String[] args) {
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter("example.txt", true))) {
+            writer.write("Hello, World!");
+            writer.newLine();
+        } catch (IOException e) {
+            System.out.println("An error occurred.");
+            e.printStackTrace();
+        }
+    }
+}
+</code></pre>
+</div>
+
+<p><strong>Serialization:</strong> The process of converting an object into a byte stream.</p>
+<div class="code">
+<pre><code>import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectOutputStream;
+import java.io.Serializable;
+
+class Person implements Serializable {
+    String name;
+    int age;
+    
+    Person(String name, int age) {
+        this.name = name;
+        this.age = age;
+    }
+}
+
+public class SerializationExample {
+    public static void main(String[] args) {
+        Person person = new Person("John", 30);
+        
+        try (FileOutputStream fileOut = new FileOutputStream("person.ser");
+             ObjectOutputStream out = new ObjectOutputStream(fileOut)) {
+            out.writeObject(person);
+            System.out.println("Serialized data is saved in person.ser");
+        } catch (IOException i) {
+            i.printStackTrace();
+        }
+    }
+}
+</code></pre>
+</div>
+<p><strong>Explanation:</strong></p>
+<ul>
+    <li><strong>implements Serializable:</strong> Marks the class as serializable.</li>
+    <li><strong>ObjectOutputStream:</strong> Writes the object to a file.</li>
+</ul>
+            `,
+            "unit 5": `
+<div class="section-title">Unit V: Multithreading and Concurrency</div>
+<p><strong>Introduction to Multithreading:</strong> The concurrent execution of two or more threads.</p>
+<p><strong>Creating Threads:</strong></p>
+<div class="code">
+<pre><code>public class MyThread extends Thread {
+    public void run() {
+        System.out.println("Thread is running");
+    }
+
+    public static void main(String[] args) {
+        MyThread thread = new MyThread();
+        thread.start();
+    }
+}
+</code></pre>
+</div>
+
+<p><strong>Explanation:</strong></p>
+<ul>
+    <li><strong>extends Thread:</strong> Creates a thread by extending the Thread class.</li>
+    <li><strong>run():</strong> Defines the code to be executed by the thread.</li>
+    <li><strong>thread.start():</strong> Starts the thread.</li>
+</ul>
+
+<p><strong>Implementing Runnable Interface:</strong></p>
+<div class="code">
+<pre><code>public class MyRunnable implements Runnable {
+    public void run() {
+        System.out.println("Runnable thread is running");
+    }
+
+    public static void main(String[] args) {
+        Thread thread = new Thread(new MyRunnable());
+        thread.start();
+    }
+}
+</code></pre>
+</div>
+
+<p><strong>Explanation:</strong></p>
+<ul>
+    <li><strong>implements Runnable:</strong> Creates a thread by implementing the Runnable interface.</li>
+    <li><strong>new Thread(new MyRunnable()):</strong> Creates a new Thread with MyRunnable.</li>
+    <li><strong>thread.start():</strong> Starts the thread.</li>
+</ul>
+
+<p><strong>Thread Life Cycle:</strong></p>
+<p><strong>States:</strong> New, Runnable, Blocked, Waiting, Timed Waiting, Terminated.</p>
+<p><strong>Thread Synchronization:</strong></p>
+<div class="code">
+<pre><code>public class SynchronizedExample {
+    private int count = 0;
+    
+    public synchronized void increment() {
+        count++;
+    }
+
+    public static void main(String[] args) {
+        SynchronizedExample example = new SynchronizedExample();
+        Thread t1 = new Thread(() -> example.increment());
+        Thread t2 = new Thread(() -> example.increment());
+        t1.start();
+        t2.start();
+    }
+}
+</code></pre>
+</div>
+
+<p><strong>Explanation:</strong></p>
+<ul>
+    <li><strong>synchronized:</strong> Ensures that only one thread can execute the method at a time.</li>
+    <li><strong>example.increment():</strong> Increments the count variable.</li>
+</ul>
+
+<p><strong>Thread Communication:</strong> wait(), notify(), and notifyAll() methods.</p>
+<p><strong>Executor Service:</strong> A higher-level replacement for the traditional way of managing threads.</p>
+<div class="code">
+<pre><code>import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+
+public class ExecutorServiceExample {
+    public static void main(String[] args) {
+        ExecutorService executor = Executors.newFixedThreadPool(2);
+        
+        executor.submit(() -> System.out.println("Task 1"));
+        executor.submit(() -> System.out.println("Task 2"));
+        
+        executor.shutdown();
+    }
+}
+</code></pre>
+</div>
+<p><strong>Explanation:</strong></p>
+<ul>
+    <li><strong>Executors.newFixedThreadPool(2):</strong> Creates a thread pool with 2 threads.</li>
+    <li><strong>executor.submit(...):</strong> Submits tasks for execution.</li>
+    <li><strong>executor.shutdown():</strong> Initiates an orderly shutdown.</li>
+</ul>
+`,
+            
+        };
+
+        function sendMessage() {
+            const inputField = document.getElementById('input-field');
+            const message = inputField.value.trim().toLowerCase();
+            inputField.value = '';
+
+            if (message) {
+                const messagesDiv = document.getElementById('messages');
+
+                // User message
+                const userMessageDiv = document.createElement('div');
+                userMessageDiv.className = 'message user-message';
+                userMessageDiv.textContent = message; // Fixed: show message instead of inputField.value
+                messagesDiv.appendChild(userMessageDiv);
+
+                // Bot response
+                const botMessageDiv = document.createElement('div');
+                botMessageDiv.className = 'message bot-message';
+                botMessageDiv.innerHTML = responses[message] || "I'm sorry, I don't understand that question.";
+                messagesDiv.appendChild(botMessageDiv);
+
+                // Scroll to the bottom
+                messagesDiv.scrollTop = messagesDiv.scrollHeight;
+            }
+        }
+
+        // Handle Enter key
+        document.getElementById('input-field').addEventListener('keypress', function (e) {
+            if (e.key === 'Enter') {
+                e.preventDefault();
+                sendMessage();
+            }
+        });
+    </script>
+</body>
+</html>
